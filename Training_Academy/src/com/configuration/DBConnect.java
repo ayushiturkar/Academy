@@ -11,7 +11,7 @@ import java.sql.SQLException;
 		private static  String password="root";
 		
 		public  static Connection getConnection()
-		{
+		{    //Establishing a connection
 			Connection connection=null;
 			try {
 			connection=DriverManager.getConnection(url,username,password);

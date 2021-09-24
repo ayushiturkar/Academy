@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import com.dao.StudentDao;
 import com.dao.StudentDaoImpl;
@@ -18,19 +19,19 @@ public class MainEntry {
 		StudentTestDao sdtdao = new StudentTestDaoImpl();		
 		do
 		{
-			System.out.println(" ******* Welcome To Training Academy ******");
-			System.out.println("1|Add new student");
-			System.out.println("2|Delete/Deactivate student");
-			System.out.println("3|Modify student details");
-			System.out.println("4|Veiw student list");
-			System.out.println("*********************************************");
-			System.out.println("5|Add marks of students ");
-			System.out.println("6|Update marks of students");
-			System.out.println("7|Delete results of students. ");
-			System.out.println("8|Veiw Student Marks  list ");
-			System.out.println("9||REPORT||");
-			System.out.println("0|Exit");
-		    System.out.println("**********************************************");
+			System.out.println(" ::::::::Welcome To Training Academy :::::::::::::");
+			System.out.println("1|            Add new student                    |");
+			System.out.println("2|        Delete/Deactivate student              |");
+			System.out.println("3|          Modify student details               |");
+			System.out.println("4|           Veiw student list                   |");
+			System.out.println("_|_______________________________________________|");
+			System.out.println("5|          Add marks of students                |");
+			System.out.println("6|         Update marks of students              |");
+			System.out.println("7|        Delete results of students             |");
+			System.out.println("8|         Veiw Student Marks  list              |");
+			System.out.println("9|               |REPORT|                        |");
+			System.out.println("0|                 Exit                          |");
+		    System.out.println("_|_______________________________________________|");
 			System.out.println("enter your choice::");
 			int ch = sc.nextInt();
 			
@@ -45,10 +46,7 @@ public class MainEntry {
 				Student s = new Student(sid,nm,mob,batch);
 				
 				boolean isinsert = sdao.addStudent(s);
-				if(isinsert)
-					System.out.println("Record added successfully");
-				else
-					System.out.println("Unsuccessful insertion");
+				
 				break;
 
 			case 2:
@@ -81,7 +79,9 @@ public class MainEntry {
 				List<Student> list = sdao.getAllStudent();
 				for(Student ss : list)
 				{
-					System.out.println(ss.getStudent_id()+ "||" +ss.getStudent_name()  +ss.getMobile()  +ss.getBatch_id());
+					System.out.println("---------------------------------");
+					System.out.println(ss.getStudent_id()+ "||" +ss.getStudent_name()+  "||"  +ss.getMobile()+ "||" +ss.getBatch_id()+ "||");
+					System.out.println("---------------------------------");
 				}
 				break;	
 				
@@ -91,12 +91,7 @@ public class MainEntry {
 				int tid = sc.nextInt();
 				int marks = sc.nextInt();
 				StudentTest st = new StudentTest(stuid,tid,marks);
-				
 				boolean ismarksinsert = sdtdao.addStudentMarks(st);
-				if(ismarksinsert)
-					System.out.println("Record added successfully");
-				else
-					System.out.println("Unsuccessful insertion");
 				break;	
 				
 			case 6:
@@ -108,7 +103,6 @@ public class MainEntry {
 				System.out.println("Enter marks to update");
 				int t_marks = sc.nextInt();
 				StudentTest stupdate = new StudentTest(s_id,t_id,t_marks);
-				
 				boolean ismarksupdated = sdtdao.updateStudentMarks(stupdate);
 				if(ismarksupdated)
 					System.out.println("Record update successfully");
@@ -122,23 +116,44 @@ public class MainEntry {
 				boolean ismarksdelete = sdtdao.deleteStudentMarks(studid);
 					System.out.println("Row deleted....");
 					break;
+					
+					
 			case 8:
 				List<StudentTest> listmarks = sdtdao.getAllStudentTest();
-				System.out.println("hey"+listmarks);
+				
 				for(StudentTest sstt : listmarks)
 				{
-					System.out.println(sstt.getStudent_id()+ "||" +sstt.getTest_id()  +sstt.getMarks());
+					System.out.println("________________________");
+					System.out.println(sstt.getStudent_id()+ "|****|" +sstt.getTest_id()+ "|****|"  +sstt.getMarks());
+					System.out.println("________________________");
 				}
 				break;		
 			
 			case 9 :
 				System.out.println("Reports");
-				System.out.println("1|Merit list of students for any given batch \n 2|Merit list of students for all batches \n 3|Show batch name and trainer name of the batch whose average percentage result is best  \n 4|Show name of the batch where maximum students have failed. ");
+				System.out.println("----------------------------------------------------------------------------------------------");
+				System.out.println("|1|Merit list of students for any given batch  \n|2|Merit list of students for all batches \n|3|Show batch name and trainer name of the batch whose average percentage result is best  \n|4|Show name of the batch where maximum students have failed. ");
+				System.out.println("----------------------------------------------------------------------------------------------");
 				int character = sc.nextInt();
-				if(character ==1)
+				if(character==1)
 				{
+				System.out.println("Enter batch_id");
+				int batch_id = sc.nextInt();
+				sdao.meritListTopFive(batch_id);
+			     }
 					
-				}
+					else if(character ==2)
+					{
+						sdao.meritListTopTen();
+					}
+					else if(character==3)
+					{
+						sdao.bestResult();
+					}
+					else 
+					{
+						sdao.batchName();
+					}
 			}	
 			
 			if(ch==0)
