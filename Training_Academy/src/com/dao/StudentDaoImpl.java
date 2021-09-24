@@ -99,25 +99,7 @@ public class StudentDaoImpl implements StudentDao {
 		} 
 		return null;
 	}
-	/*public Map<String,Integer> getStudentWiseCount()
-	{
-		HashMap<String,Integer> hm=new HashMap<>();
-		try(Connection connection=DBConnect.getConnection();
-				Statement s=connection.createStatement())
-		{
-			ResultSet rs=s.executeQuery("select count(*) , st.marks, s.sname from student_test st inner join student s on s.student_id = st.student_id  group by s.student_id;");
-				while(rs.next())
-				{
-					hm.put(rs.getString(1), rs.getInt(2));
-				}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return hm;
-	}
-*/
+	
 	@Override
 	public void meritListTopFive(int batch_id) {
 		try(Connection connection= DBConnect.getConnection();
